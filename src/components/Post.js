@@ -1,23 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import {ReactComponent as PostButton} from "../postbutton.png"
-
-
+import { ReactComponent as PostButton } from "../postbutton.png";
 
 const Post = () => {
+  let state = useSelector((state) => {
+    return state.post;
+  });
 
-  
-
-  
-  
   return (
-    
     <PostWrap>
-      
-      
       <PostContainer>
         <PostHeader>
           <Avatar
@@ -44,9 +39,7 @@ const Post = () => {
 
         <PostTime>0000-00-00</PostTime>
       </PostContainer>
-      
     </PostWrap>
-  
   );
 };
 
@@ -57,9 +50,8 @@ const PostWrap = styled.div`
 `;
 
 const Spinner = styled.img`
-position: absolute;
-
-`
+  position: absolute;
+`;
 
 const PostContainer = styled.div`
   width: 100%;
@@ -69,12 +61,10 @@ const PostContainer = styled.div`
 `;
 
 const PostHeader = styled.div`
-  display:flex;
-  
+  display: flex;
+
   align-items: center;
   padding: 20px;
-  
-  
 `;
 
 const PostImg = styled.img`
