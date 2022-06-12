@@ -3,10 +3,21 @@ import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import {ReactComponent as PostButton} from "../postbutton.png"
+
+
 
 const Post = () => {
+
+  
+
+  
+  
   return (
+    
     <PostWrap>
+      
+      
       <PostContainer>
         <PostHeader>
           <Avatar
@@ -33,7 +44,9 @@ const Post = () => {
 
         <PostTime>0000-00-00</PostTime>
       </PostContainer>
+      
     </PostWrap>
+  
   );
 };
 
@@ -42,6 +55,11 @@ const PostWrap = styled.div`
   justify-content: center;
   margin-top: 60px;
 `;
+
+const Spinner = styled.img`
+position: absolute;
+
+`
 
 const PostContainer = styled.div`
   width: 100%;

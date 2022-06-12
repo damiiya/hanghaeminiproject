@@ -11,7 +11,7 @@ import WritePost from "./pages/WritePost";
 
 function App() {
   return (
-    <div className="app" sytle={{backgroundColor: "#4F8A8B"}}>
+    <div className="app">
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
@@ -21,7 +21,7 @@ function App() {
         <Route path="/EditPost" element={<EditPost />} />
         <Route path="/WritePost" element={<WritePost />} />
       </Routes>
-      <div className="footer" style={{backgroundColor:"red"}}>h</div>
+      {/* <div className="footer" style={{backgroundColor:"red", transform: "translateY(-100%)"}}>h</div> */}
     </div>
   );
 }

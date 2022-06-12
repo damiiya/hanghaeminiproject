@@ -1,8 +1,6 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
-import {useForm} from "react-hook-form";
-
-
+import { useForm } from "react-hook-form";
 
 function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch } = useForm( {mode: onchange} );
@@ -10,6 +8,16 @@ function SignUp() {
   // const onSubmit = async data => {
   //   alert(JSON.stringify(data));
   // }
+  // axios.post('/user', {
+  //   firstName: 'Fred',
+  //   lastName: 'Flintstone'
+  // })
+  // .then(function (response) {
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
 
   const password = useRef({});
   password.current = watch("password", "")
@@ -22,8 +30,12 @@ function SignUp() {
   
       const idErr = (
         (errors.username?.type === "required") ? (<p>ID는 필수</p>) :
-        (errors.username?.type === "pattern") ? (<p> ID는 형식 확인.</p>) : ("")
+        (errors.username?.type === "pattern") ? (<p> ID는 형식 확인.</p>) : 
+        (errors.username?.type === "maxLength") ? (<p>ID 너무 김!</p>) : 
+        (errors.username?.type === "minLength") ? (<p>ID 너무 짧음!</p>) :("")
       );
+
+      
 
       const nickErr = (
         (errors.nickname?.type === "required") ? (<p>NICKNAME은 필수</p>) :
@@ -33,12 +45,14 @@ function SignUp() {
       
       const pwErr = (
         (errors.password?.type === "required") ? (<p>PW는 필수</p>) :
-        (errors.password?.type === "pattern") ? (<p>PW 형식확인</p>) : ("")
+        (errors.password?.type === "minLength") ? (<p>PW 너무 짧음!</p>) :
+        (errors.password?.type === "pattern") ? (<p>형식이 올바르지 않음!</p>) : 
+        (errors.password?.type === "maxLength") ? (<p>PW 너무 길다!!</p>) : ("")
       );
       
       const confirmErr = (
         (errors.confirm?.type === "required") ? (<p>CONFIRM은 필수</p>) :
-        (errors.confirm?.type === "pattern") ? (<p>PW 불일치</p>) : ("")
+        (errors.confirm?.type === "validate") ? (<p>PW 불일치</p>) : ("")
       );
       
 
@@ -47,7 +61,7 @@ function SignUp() {
   return (
     <div className="signUpPage">       
       <ErrorPlot>
-      {idErr}
+      
       {pwErr}
       {confirmErr}
       {nickErr}
@@ -63,10 +77,10 @@ function SignUp() {
         <InputContainer>
 
           <InputWrap >
-            <label>ID : 소문자로 시작, 대문자는 입력X, <br/>숫자 사용 가능, 길이는 6~12자</label> <br/>                                        
+            <label>ID : 소문자로 시작, 대문자는 입력X, <br/>숫자 사용 가능, 길이는 6~12자</label><pTag>{idErr}</pTag><br/>                                        
             <input type="text" placeholder="ID를 입력해주세요" name="username" 
              {...register('username',{
-              required: true, pattern: {value:  /^[a-z]+[a-z0-9]{5,11}$/g }
+              required: true, pattern: {value:  /^[a-z][a-z0-9]{5,11}$/g }, maxLength: 12, minLength: 6
             })}/><br/>              
               <button>중복체크</button>
           </InputWrap>
@@ -76,7 +90,7 @@ function SignUp() {
             <label>PW : 영문자, 숫자, 특수문자가 각각 포함,<br/>8~16자</label><br/>
             <input type="password" placeholder="비밀번호를 입력해주세요" name="password"
             {...register('password',{
-              required: true, pattern: { value: /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/ }     
+              required: true, pattern: { value: /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/ },minLength: 8, maxLength:16     
             })}/>
           </InputWrap>
 
@@ -114,11 +128,17 @@ const ErrorPlot = styled.div`
  position: absolute;
 `
 
+const pTag = styled.div`
+  border: 1px solid black;
+  outline: 1px solid black;
+  font-size: 10px;
+`
+
 
 const SignForm = styled.div`
   display: flex;
-  justify-content: center;  
-  align-items:center;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 
   margin: 20px 35% 20px 35%;
@@ -127,21 +147,18 @@ const SignForm = styled.div`
   
   border-radius: 10px;
   padding: 10px;
-  
+
   font-family: "S-CoreDream-8Heavy";
 
   box-shadow: 10px 10px 10px #fafafa;
 
-  
-  background-color: #EC994B;
+  background-color: #ec994b;
   object-fit: contain;
-  
-  
+
   /* background-size: contain; */
   /* background-position: cover; */
   border: solid 1px #331621;
-  
-`
+`;
 
 const InputContainer = styled.div`
   position: relative;
@@ -156,10 +173,10 @@ const InputContainer = styled.div`
 const InputWrap = styled.div`
   position: relative;
   height: 10%;
-  align-items:center;
+  align-items: center;
   border-radius: 10px;
-  margin: 5% 0 10px;
-  background-color: #FFC468;
+  margin: 5px 0 10px;
+  background-color: #ffc468;
   padding: 20px;
-`
+`;
 export default SignUp;
