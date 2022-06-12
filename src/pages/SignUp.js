@@ -1,55 +1,139 @@
-import React from "react";
+import React, {useRef} from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 
 function SignUp() {
-  const { register, handleSubmit } = useForm();
+  const {register, handleSubmit, formState: {errors}, watch } = useForm( {mode: onchange} );
+  
+  // const onSubmit = async data => {
+  //   alert(JSON.stringify(data));
+  // }
+  // axios.post('/user', {
+  //   firstName: 'Fred',
+  //   lastName: 'Flintstone'
+  // })
+  // .then(function (response) {
+  //   console.log(response);
+  // })
+  // .catch(function (error) {
+  //   console.log(error);
+  // });
+
+  const password = useRef({});
+  password.current = watch("password", "")
+  
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(data)
+    
+    
   };
-  const onError = (error) => {
-    console.log(error);
-  };
+  
+      const idErr = (
+        (errors.username?.type === "required") ? (<p>ID는 필수</p>) :
+        (errors.username?.type === "pattern") ? (<p> ID는 형식 확인.</p>) : 
+        (errors.username?.type === "maxLength") ? (<p>ID 너무 김!</p>) : 
+        (errors.username?.type === "minLength") ? (<p>ID 너무 짧음!</p>) :("")
+      );
+
+      
+
+      const nickErr = (
+        (errors.nickname?.type === "required") ? (<p>NICKNAME은 필수</p>) :
+        (errors.nickname?.type === "minLength") ? (<p>NICKNAME은 2글자 이상</p>) :
+        (errors.nickname?.type === "maxLength") ? (<p>NICKNAME은 10글자 이하</p>) : ("")
+      );
+      
+      const pwErr = (
+        (errors.password?.type === "required") ? (<p>PW는 필수</p>) :
+        (errors.password?.type === "minLength") ? (<p>PW 너무 짧음!</p>) :
+        (errors.password?.type === "pattern") ? (<p>형식이 올바르지 않음!</p>) : 
+        (errors.password?.type === "maxLength") ? (<p>PW 너무 길다!!</p>) : ("")
+      );
+      
+      const confirmErr = (
+        (errors.confirm?.type === "required") ? (<p>CONFIRM은 필수</p>) :
+        (errors.confirm?.type === "validate") ? (<p>PW 불일치</p>) : ("")
+      );
+      
+
+     
+
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)}>
-      <SignForm>
+    <div className="signUpPage">       
+      <ErrorPlot>
+      
+      {pwErr}
+      {confirmErr}
+      {nickErr}
+      
+      </ErrorPlot>
+      <form onSubmit={handleSubmit(onSubmit)}>
+       
+       
+       <SignForm> 
+        
+        
+
         <InputContainer>
-          <InputWrap style={{ justifyContent: "spaceBetween" }}>
-            ID<button>중복확인</button>
-            <br />
-            <input
-              type="text"
-              placeholder="ID를 입력해주세요"
-              {...register("useasdfrname", {
-                minLength: {
-                  value: 5,
-                  message: "ID는 최소 5글자 이상입니다",
-                },
-              })}
-            />
-            <br />
+
+          <InputWrap >
+            <label>ID : 소문자로 시작, 대문자는 입력X, <br/>숫자 사용 가능, 길이는 6~12자</label><pTag>{idErr}</pTag><br/>                                        
+            <input type="text" placeholder="ID를 입력해주세요" name="username" 
+             {...register('username',{
+              required: true, pattern: {value:  /^[a-z][a-z0-9]{5,11}$/g }, maxLength: 12, minLength: 6
+            })}/><br/>              
+              <button>중복체크</button>
           </InputWrap>
+
+
           <InputWrap>
-            PW
-            <br />
-            <input type="text" placeholder="비밀번호를 입력해주세요" />
+            <label>PW : 영문자, 숫자, 특수문자가 각각 포함,<br/>8~16자</label><br/>
+            <input type="password" placeholder="비밀번호를 입력해주세요" name="password"
+            {...register('password',{
+              required: true, pattern: { value: /^(?=.*[a-zA-Z])((?=.*\d)(?=.*\W)).{8,16}$/ },minLength: 8, maxLength:16     
+            })}/>
           </InputWrap>
+
           <InputWrap>
-            CONFIRM PW
-            <br />
-            <input type="text" placeholder="비밀번호를 입력해주세요" />
+            <label>CONFIRM PW: 패스워드 재입력</label><br/>
+            <input type="password" placeholder="비밀번호를 재입력해주세요" name="confirm"
+            {...register('confirm',{
+              required: true, validate: value => value === password.current || "not match"
+            })}/>
           </InputWrap>
+          
           <InputWrap>
-            NICKNAME
-            <br />
-            <input type="text" placeholder="닉네임을 입력해주세요" />
+            <label>NICKNAME: 모든 문자 형식 가능, <br/>2~10글자</label><br/>
+            <input type="text" placeholder="닉네임을 입력해주세요" name="nickname"
+            {...register('nickname',{
+              required: true, minLength:2, maxLength:10
+            })}/>
           </InputWrap>
-          <input type="submit" />
+
+          <input type="submit" onClick={handleSubmit(onSubmit)}/>
+          
         </InputContainer>
+        
       </SignForm>
-    </form>
-  );
+      </form>
+      </div>
+
+  )
 }
+
+const ErrorPlot = styled.div`
+ width: 30vw;
+ height: 30vh;
+ border: solid 1px red;
+ position: absolute;
+`
+
+const pTag = styled.div`
+  border: 1px solid black;
+  outline: 1px solid black;
+  font-size: 10px;
+`
+
 
 const SignForm = styled.div`
   display: flex;
@@ -59,8 +143,8 @@ const SignForm = styled.div`
 
   margin: 20px 35% 20px 35%;
   width: 30vw;
-  height: 50vh;
-
+  height: 100%;
+  
   border-radius: 10px;
   padding: 10px;
 
@@ -77,18 +161,21 @@ const SignForm = styled.div`
 `;
 
 const InputContainer = styled.div`
-  width: 20vw;
-  height: 100%;
+  position: relative;
+  
   margin: 20px 10% auto;
   flex-direction: column;
   margin: auto;
-`;
-
+  
+  
+`
+//test
 const InputWrap = styled.div`
+  position: relative;
   height: 10%;
   align-items: center;
   border-radius: 10px;
-  margin: 5% 0 10px;
+  margin: 5px 0 10px;
   background-color: #ffc468;
   padding: 20px;
 `;

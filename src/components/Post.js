@@ -4,6 +4,7 @@ import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { ReactComponent as PostButton } from "../postbutton.png";
 
 const Post = () => {
   let state = useSelector((state) => {
@@ -48,6 +49,10 @@ const PostWrap = styled.div`
   margin-top: 60px;
 `;
 
+const Spinner = styled.img`
+  position: absolute;
+`;
+
 const PostContainer = styled.div`
   width: 100%;
   max-width: 700px;
@@ -57,6 +62,7 @@ const PostContainer = styled.div`
 
 const PostHeader = styled.div`
   display: flex;
+
   align-items: center;
   padding: 20px;
 `;
