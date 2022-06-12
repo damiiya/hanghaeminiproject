@@ -13,6 +13,7 @@ const Header = () => {
           />
         </Link>
       </HeaderWrapper>
+      
       <BtnWrapper>
         <Link to="/Login">
           <Btn>Log In</Btn>
@@ -21,6 +22,7 @@ const Header = () => {
           <Btn>Sign Up</Btn>
         </Link>
       </BtnWrapper>
+      
       {/* if 로그인 하면 아래 뷰로 바꿔주기 */}
       {/* <BtnWrapper>
         <Link to="/Login">

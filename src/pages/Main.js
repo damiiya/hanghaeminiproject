@@ -5,9 +5,9 @@ import styled from "styled-components";
 function Main() {
   return (
     <div>
-      <Post />
-      <Post />
-      <Post />
+      <Post/>
+      <Post/>
+      <Post/>
     </div>
   );
 }
