@@ -7,9 +7,11 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo
-          style={{ width: "50%", marginLeft: "20px", objectFit: "contain" }}
-        />
+        <Link to="/">
+          <Logo
+            style={{ width: "50%", marginLeft: "20px", objectFit: "contain" }}
+          />
+        </Link>
       </HeaderWrapper>
       <BtnWrapper>
         <Link to="/Login">
@@ -19,6 +21,15 @@ const Header = () => {
           <Btn>Sign Up</Btn>
         </Link>
       </BtnWrapper>
+      {/* if 로그인 하면 아래 뷰로 바꿔주기 */}
+      {/* <BtnWrapper>
+        <Link to="/Login">
+          <Btn>게시글 작성</Btn>
+        </Link>
+        <Link to="/SignUp">
+          <Btn>Log out</Btn>
+        </Link>
+      </BtnWrapper> */}
     </HeaderContainer>
   );
 };
