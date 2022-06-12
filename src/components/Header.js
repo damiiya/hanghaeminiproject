@@ -7,9 +7,11 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo
-          style={{ width: "50%", marginLeft: "20px", objectFit: "contain" }}
-        />
+        <Link to="/">
+          <Logo
+            style={{ width: "50%", marginLeft: "20px", objectFit: "contain" }}
+          />
+        </Link>
       </HeaderWrapper>
       <BtnWrapper>
         <Link to="/Login">
