@@ -8,7 +8,7 @@ const Header = () => {
     <HeaderContainer>
       <HeaderWrapper>
         <Logo
-          style={{ width: "40%", marginLeft: "10px", objectFit: "contain" }}
+          style={{ width: "50%", marginLeft: "20px", objectFit: "contain" }}
         />
       </HeaderWrapper>
       <BtnWrapper>
@@ -32,6 +32,8 @@ const HeaderContainer = styled.div`
   height: 10vh;
   z-index: 100;
   width: 100vw;
+  background-color: #f5894c;
+  border-bottom: 3px solid black;
 `;
 
 const HeaderWrapper = styled.div`
@@ -45,13 +47,18 @@ const BtnWrapper = styled.div`
   height: 100px;
   justify-content: space-between;
   padding: 10px;
+  margin-right: 30px;
 `;
 
-const Btn = styled.span`
+const Btn = styled.button`
   font-size: 20px;
   font-weight: bold;
   font-family: "S-CoreDream-8Heavy";
   margin: 0 10px;
+  padding: 10px 20px;
+  border: 3px solid black;
+  border-radius: 40px 40px 0 0;
+  width: 150px;
 `;
 
 export default Header;

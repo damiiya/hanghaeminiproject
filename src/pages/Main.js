@@ -6,6 +6,8 @@ function Main() {
   return (
     <div>
       <Post />
+      <Post />
+      <Post />
     </div>
   );
 }
