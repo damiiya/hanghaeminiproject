@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 const Post = () => {
+  let state = useSelector((state) => {
+    return state.post;
+  });
+
   return (
     <PostWrap>
       <PostContainer>
