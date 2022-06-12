@@ -32,6 +32,8 @@ const HeaderContainer = styled.div`
   height: 10vh;
   z-index: 100;
   width: 100vw;
+  background-color: #F5894C;
+  //background-color: white;
 `;
 
 const HeaderWrapper = styled.div`

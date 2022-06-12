@@ -26,18 +26,26 @@ const Post = () => {
 
 const PostContainer = styled.div`
   max-width: 500px;
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border: 1px solid lightgray;
-  margin-bottom: 45px;
+  
+  
+  justify-content:center;
+
 `;
 
 const PostHeader = styled.div`
-  display: flex;
+  
+  position: relative;
   align-items: center;
   padding: 20px;
+  
+  
 `;
 
-const PostImg = styled.image`
+const PostImg = styled.img`
   width: 100%;
   object-fit: contain;
   border-top: 1px solid lightgray;

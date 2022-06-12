@@ -37,7 +37,7 @@ function SignUp() {
 const SignForm = styled.div`
   position: absolute;
   text-align: center;
-  margin: 10% 35% auto;
+  margin: 20px 35% auto;
   width: 30vw;
   height: 40vh;
   border-radius: 10px;
