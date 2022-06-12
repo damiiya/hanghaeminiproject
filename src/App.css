@@ -2,6 +2,10 @@
   margin: 0;
 }
 
+.app {
+  background-color: #e7e7e7
+}
+
 @font-face {
   font-family: 'S-CoreDream-8Heavy';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff');
