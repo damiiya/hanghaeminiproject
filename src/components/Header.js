@@ -44,10 +44,10 @@ const Header = () => {
           </BtnWrapper>
         ) : (
           <BtnWrapper>
-            <Link to="/Login">
+            <Link to="/WritePost">
               <Btn>게시글 작성</Btn>
             </Link>
-            <Link to="/SignUp">
+            <Link to="/">
               <Btn
                 onClick={() => {
                   logout();
