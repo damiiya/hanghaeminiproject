@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const SignUp = () => {
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ const SignUp = () => {
     watch,
   } = useForm({ mode: onchange });
 
-  const username = useRef();
+  const username = useRef(); 
   username.current = watch("username", "");
   const password = useRef();
   password.current = watch("password", "");
@@ -33,14 +34,16 @@ const SignUp = () => {
     const postID = { username: username.current };
     const sendID = axios
       .post("http://3.34.188.26/user/signup/duplicate", {
-        postID,
+        'username': username.current
       })
       .then(function (response) {
         alert("사용가능!");
         console.log(response + "dupli success");
+        console.log(username.current)
         setIdCheck(true);
       })
       .catch(function (error) {
+        alert("이미 존재하는 아이디입니다");
         console.log(error + "dupli fail");
         setIdCheck(false);
       });
@@ -264,8 +267,8 @@ const InputContainer = styled.div`
 const InputWrap = styled.div`
   position: relative;
   align-items: center;
-  border-radius: 10px;
-  margin: 5px 0 10px;
+  border-radius: 10px;d
+  margin: 5px 0 10px 0;
   background-color: #ffc468;
   padding: 20px;
 `;
