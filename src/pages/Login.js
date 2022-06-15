@@ -5,9 +5,11 @@ import { OnLoginUser } from "../redux/modules/post.js";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import styled from "styled-components";
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   // useForm 구조분해할당으로 사용방법 지정
   const {
     register,
@@ -19,28 +21,26 @@ const Login = () => {
   username.current = watch("username", "");
   const password = useRef();
   password.current = watch("password", "");
+
   // 요청
   const onSubmit = async () => {
     const userLoginData = {
-      'username': username.current,
-      'password': password.current,
+      username: username.current,
+      password: password.current,
     };
-    console.log(username);
     await axios
       .post("http://3.34.188.26/user/login", userLoginData)
-      .then((response)=> {
+      .then(function (response) {
         localStorage.setItem("access_token", response.headers.authorization);
-        localStorage.setItem("userLogin", true);
-        const UserState = localStorage.getItem("UserState");
-        dispatch(OnLoginUser(UserState));
+        // localStorage.setItem("userLogin", true);
+        // const UserState = localStorage.getItem("UserLogin");
+        // dispatch(OnLoginUser(UserState));
         alert("success");
-        // navigate("/");
-        console.log(response)
-        console.log(response.headers + '---hedaders');
-        console.log(response.headers.authorization +'---token');
+        navigate("/");
+        // console.log(response);
       })
-      .catch((error)=> {
-        console.log(error);
+      .catch(function (error) {
+       // console.log(error);
         alert("error");
       });
   };
@@ -106,8 +106,8 @@ const LoginForm = styled.div`
   border-radius: 10px;
   padding: 10px;
   font-family: "S-CoreDream-8Heavy";
-  box-shadow: 10px 10px 10px #FAFAFA;
-  background-color: #EC994B;
+  box-shadow: 10px 10px 10px #fafafa;
+  background-color: #ec994b;
   object-fit: contain;
   /* background-size: contain; */
   /* background-position: cover; */
@@ -128,4 +128,5 @@ const InputWrap = styled.div`
   background-color: #FFC468;
   padding: 20px;
 `;
+
 export default Login;
