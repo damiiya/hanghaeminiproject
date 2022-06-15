@@ -1,32 +1,97 @@
 import React, {useRef} from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function SignUp() {
   const {register, handleSubmit, formState: {errors}, watch } = useForm( {mode: onchange} );
   
+  // const navigate = React.usenavigate(); 
+
+    
+
+  const username = useRef();
+  username.current = watch("username", "")
+  
+
+  const password = useRef();
+  password.current = watch("password", "")
+  
+
+  const passwordCheck = useRef();
+  passwordCheck.current = watch("passwordCheck", "")
+  
+
+  const nickname = useRef();
+  nickname.current = watch("nickname", "")
+
+  const email = useRef();
+  email.current = watch("email","")
+
+  const [idCheck,setIdCheck] = React.useState(false);
+
+  
+    
+  
+  
+  const IDduplicate = () => {
+
+    const exID = {"username":username.current};
+    // console.log(postID)
+    
+    const sendID = axios.post('http://3.34.188.26/user/signup/duplicate', {
+    exID
+    })
+    .then(function(response){
+      alert("사용가능!")
+      console.log(response + 'dupli success')
+      setIdCheck(true);
+    }) 
+    .catch(function(error){
+      console.log(error + 'dupli fail')
+      setIdCheck(false);
+    })
+  };
+
   // const onSubmit = async data => {
   //   alert(JSON.stringify(data));
   // }
-  // axios.post('/user', {
-  //   firstName: 'Fred',
-  //   lastName: 'Flintstone'
-  // })
-  // .then(function (response) {
-  //   console.log(response);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  // });
 
-  const password = useRef({});
-  password.current = watch("password", "")
+  const onSubmit = async (data) => {
+
   
-  const onSubmit = (data) => {
-    console.log(data)
+ 
+  const sendUserData = await axios.post('http://3.34.188.26/user/signup', {
+    ...data
+  })
+  .then(function (response) {
+    alert("success")
+    // navigate('/');
+    console.log(response + 'sign success');
+  })
+  .catch(function (error) {
+    console.log(error + 'sign fail');
+  })
+};
+  
+  // console.log(sendUserData);
+  
+  
+  
+  // const onSubmit = (data) => {
+  //   const copy = [...data];
+    
+  //   copy =  {
+  //     username: data.username.current,
+  //     password: data.password.current,
+  //     confirm: data.confirm.current,
+  //     nickname: data.nickname.current
+  //   };
+    
+  //   console.log(copy);
     
     
-  };
+  
   
       const idErr = (
         (errors.username?.type === "required") ? (<p>ID는 필수</p>) :
@@ -51,11 +116,11 @@ function SignUp() {
       );
       
       const confirmErr = (
-        (errors.confirm?.type === "required") ? (<p>CONFIRM은 필수</p>) :
-        (errors.confirm?.type === "validate") ? (<p>PW 불일치</p>) : ("")
+        (errors.passwordCheck?.type === "required") ? (<p>CONFIRM은 필수</p>) :
+        (errors.passwordCheck?.type === "validate") ? (<p>PW 불일치</p>) : ("")
       );
       
-
+        console.log(idCheck);
      
 
   return (
@@ -77,12 +142,13 @@ function SignUp() {
         <InputContainer>
 
           <InputWrap >
-            <label>ID : 소문자로 시작, 대문자는 입력X, <br/>숫자 사용 가능, 길이는 6~12자</label><pTag>{idErr}</pTag><br/>                                        
-            <input type="text" placeholder="ID를 입력해주세요" name="username" 
+            <label>ID : 소문자로 시작, 대문자는 입력X, <br/>숫자 사용 가능, 길이는 6~12자</label>
+            <PTag>{idErr}</PTag><br/>                                        
+            <input type="text" placeholder="ID를 입력해주세요" name="username"
              {...register('username',{
               required: true, pattern: {value:  /^[a-z][a-z0-9]{5,11}$/g }, maxLength: 12, minLength: 6
             })}/><br/>              
-              <button>중복체크</button>
+              <button type="button" onClick={IDduplicate} disabled={idCheck} name="idBtn">중복체크</button>
           </InputWrap>
 
 
@@ -96,8 +162,8 @@ function SignUp() {
 
           <InputWrap>
             <label>CONFIRM PW: 패스워드 재입력</label><br/>
-            <input type="password" placeholder="비밀번호를 재입력해주세요" name="confirm"
-            {...register('confirm',{
+            <input type="password" placeholder="비밀번호를 재입력해주세요" name="passwordCheck"
+            {...register('passwordCheck',{
               required: true, validate: value => value === password.current || "not match"
             })}/>
           </InputWrap>
@@ -110,13 +176,21 @@ function SignUp() {
             })}/>
           </InputWrap>
 
+          <InputWrap>
+            <label>E-Mail : 형식에 맞춰 작성<br/></label><br/>
+            <input type="text" placeholder="E-mail을 입력해주세요" name="email"
+            {...register('email',{
+              required: true, pattern: { value: /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/ }     
+            })}/>
+          </InputWrap>
+
           <input type="submit" onClick={handleSubmit(onSubmit)}/>
           
         </InputContainer>
         
       </SignForm>
       </form>
-      </div>
+    </div>
 
   )
 }
@@ -128,10 +202,13 @@ const ErrorPlot = styled.div`
  position: absolute;
 `
 
-const pTag = styled.div`
+const PTag = styled.div`
+  
   border: 1px solid black;
-  outline: 1px solid black;
+  margin: 20px 0 0 0;
+  height:15px;
   font-size: 10px;
+  
 `
 
 
@@ -142,7 +219,7 @@ const SignForm = styled.div`
   text-align: center;
 
   margin: 20px 35% 20px 35%;
-  width: 30vw;
+  width: 35vw;
   height: 100%;
   
   border-radius: 10px;
@@ -172,7 +249,7 @@ const InputContainer = styled.div`
 //test
 const InputWrap = styled.div`
   position: relative;
-  height: 10%;
+  
   align-items: center;
   border-radius: 10px;
   margin: 5px 0 10px;

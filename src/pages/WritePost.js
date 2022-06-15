@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import PostingForm from "../components/PostingForm";
 
 function WritePost() {
-  return <div>WritePost</div>;
+  return (
+    <PostingForm/>
+  )
 }
 
 export default WritePost;
