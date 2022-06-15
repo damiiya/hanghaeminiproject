@@ -1,11 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import user from "./modules/user.js";
-import post from "./modules/post.js";
+import postSlice from "./modules/post.js";
+import commentSlice from "./modules/comment.js";
 
+// 리듀서 이름: 리듀서 이름.reducer,
 const store = configureStore({
   reducer: {
-    user: user.reducer,
-    post: post.reducer,
+    postSlice: postSlice.reducer,
+    commentSlice: commentSlice.reducer,
   },
 });
 

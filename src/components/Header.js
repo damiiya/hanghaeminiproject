@@ -1,9 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { OnLoginUser } from "../redux/modules/post.js";
 import { ReactComponent as Logo } from "../logo.svg";
 import styled from "styled-components";
 
 const Header = () => {
+  const token = localStorage.getItem("access_token");
+  const navigate = useNavigate();
+  // const UserState = useSelector((state) => console.log(state));
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(OnLoginUser(localStorage.getItem("UserState")));
+  // }, []);
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/");
+    //   localStorage.setItem("userState", false);
+    //   const userLogin = localStorage.getItem("UserState");
+    //   dispatch(OnLoginUser(userLogin));
+  };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -13,25 +32,33 @@ const Header = () => {
           />
         </Link>
       </HeaderWrapper>
-      
-      <BtnWrapper>
-        <Link to="/Login">
-          <Btn>Log In</Btn>
-        </Link>
-        <Link to="/SignUp">
-          <Btn>Sign Up</Btn>
-        </Link>
-      </BtnWrapper>
-      
-      {/* if 로그인 하면 아래 뷰로 바꿔주기 */}
-      {/* <BtnWrapper>
-        <Link to="/Login">
-          <Btn>게시글 작성</Btn>
-        </Link>
-        <Link to="/SignUp">
-          <Btn>Log out</Btn>
-        </Link>
-      </BtnWrapper> */}
+      <>
+        {!token ? (
+          <BtnWrapper>
+            <Link to="/Login">
+              <Btn>Log In</Btn>
+            </Link>
+            <Link to="/SignUp">
+              <Btn>Sign Up</Btn>
+            </Link>
+          </BtnWrapper>
+        ) : (
+          <BtnWrapper>
+            <Link to="/Login">
+              <Btn>게시글 작성</Btn>
+            </Link>
+            <Link to="/SignUp">
+              <Btn
+                onClick={() => {
+                  logout();
+                }}
+              >
+                Log out
+              </Btn>
+            </Link>
+          </BtnWrapper>
+        )}
+      </>
     </HeaderContainer>
   );
 };
