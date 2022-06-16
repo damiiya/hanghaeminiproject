@@ -33,22 +33,23 @@ const Login = () => {
       .post("http://3.34.188.26/user/login", userLoginData)
       .then(function (response) {
         localStorage.setItem("access_token", response.headers.authorization);
+        // localStorage.setItem("userLogin", true);
+        // const UserState = localStorage.getItem("UserLogin");
+        // dispatch(OnLoginUser(UserState));
         alert("success");
         navigate("/");
-        console.log(response);
+        // console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
         alert("error");
       });
   };
-
   // 에러 메세지
   const idErr =
     errors.username?.type === "required" ? <p>ID를 입력해주세요.</p> : "";
   const pwErr =
     errors.password?.type === "required" ? <p>PW를 입력해주세요</p> : "";
-
   return (
     <div className="loginPage">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +96,6 @@ const Login = () => {
     </div>
   );
 };
-
 const LoginForm = styled.div`
   display: flex;
   justify-content: center;
@@ -114,14 +114,12 @@ const LoginForm = styled.div`
   /* background-position: cover; */
   border: solid 1px #331621;
 `;
-
 const InputContainer = styled.div`
   position: relative;
   margin: 20px 10% auto;
   flex-direction: column;
   margin: auto;
 `;
-
 const InputWrap = styled.div`
   position: relative;
   height: 10%;

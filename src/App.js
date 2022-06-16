@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp.js";
 import DetailPost from "./pages/DetailPost.js";
 import EditPost from "./pages/EditPost";
 import WritePost from "./pages/WritePost";
+import axios from 'axios';
 
 function App() {
   return (

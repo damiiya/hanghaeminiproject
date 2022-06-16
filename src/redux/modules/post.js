@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+
 export const getPosts = createAsyncThunk("GET/POSTS", async () => {
   return axios({
     method: "get",
     url: "http://3.34.188.26/posts",
   }).then((response) => response.data);
 });
+
 // axios({
 //   method: "get",
 //   url: "http://3.34.188.26/posts",
 // });
 // then((response) => response.data.postList);
+
 //   const testSlice = createSlice({
 //     name: "users",
 //     initialState: {
@@ -31,6 +34,7 @@ export const getPosts = createAsyncThunk("GET/POSTS", async () => {
 //       },
 //     },
 //   })
+
 const postsSlice = createSlice({
   name: "posts",
   initialState: {
@@ -57,8 +61,10 @@ const postsSlice = createSlice({
     },
   },
 });
+
 //   export const { usersLoading, usersReceived} = userSlice.action
 export default postsSlice.reducer;
+
 //   const postSlice = createSlice({
 //     name: "post",
 //     initialState: {
@@ -71,6 +77,9 @@ export default postsSlice.reducer;
 //         state.userLogin = UserState;
 //       },
 //     },
+
 //   });
+
 //   export let { OnLoginUser } = postSlice.actions;
+
 //   export default postSlice.reducer;
