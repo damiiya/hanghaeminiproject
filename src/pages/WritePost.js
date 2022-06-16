@@ -3,7 +3,9 @@ import styled from "styled-components";
 import PostingForm from "../components/PostingForm";
 
 function WritePost() {
+
   return <PostingForm />;
+
 }
 
 

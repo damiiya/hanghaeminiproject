@@ -17,7 +17,6 @@ const Login = () => {
     formState: { errors },
     watch,
   } = useForm({ mode: onchange });
-
   const username = useRef();
   username.current = watch("username", "");
   const password = useRef();
@@ -33,7 +32,9 @@ const Login = () => {
       .post("http://3.34.188.26/user/login", userLoginData)
       .then(function (response) {
         localStorage.setItem("access_token", response.headers.authorization);
+
         // localStorage.setItem("username", response.headers.username);
+
         // const UserState = localStorage.getItem("UserLogin");
         // dispatch(OnLoginUser(UserState));
         alert("success");
@@ -41,7 +42,9 @@ const Login = () => {
         // console.log(response);
       })
       .catch(function (error) {
+
         // console.log(error);
+
         alert("error");
       });
   };
@@ -126,7 +129,7 @@ const InputWrap = styled.div`
   align-items: center;
   border-radius: 10px;
   margin: 5px 0 10px;
-  background-color: #ffc468;
+  background-color: #FFC468;
   padding: 20px;
 `;
 

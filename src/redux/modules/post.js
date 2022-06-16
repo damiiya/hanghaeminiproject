@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
 const serverUrl = "http://3.34.188.26";
 
 export const getPosts = createAsyncThunk("GET/getPosts", async () => {
@@ -85,3 +86,4 @@ const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
+
