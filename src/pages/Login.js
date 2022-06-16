@@ -33,7 +33,7 @@ const Login = () => {
       .post("http://3.34.188.26/user/login", userLoginData)
       .then(function (response) {
         localStorage.setItem("access_token", response.headers.authorization);
-        // localStorage.setItem("userLogin", true);
+        // localStorage.setItem("username", response.headers.username);
         // const UserState = localStorage.getItem("UserLogin");
         // dispatch(OnLoginUser(UserState));
         alert("success");

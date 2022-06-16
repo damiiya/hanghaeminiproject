@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import {useNavigate} from"react-router-dom"
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 function PostingForm() {
   const navigate = useNavigate();
 
@@ -38,13 +39,12 @@ function PostingForm() {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("file", data.file[0]);
-    const postDto = 
-      {
-        title: title.current,
-        content: content.current,
-        imageUrl: null,
-        tags: [{ tag: 'tag1.current' }, { tag: 'tag2.current' }],
-      };
+    const postDto = {
+      title: title.current,
+      content: content.current,
+      imageUrl: null,
+      tags: [{ tag: "tag1.current" }, { tag: "tag2.current" }],
+    };
     formData.append(
       "postDto",
       new Blob([JSON.stringify(postDto, { contentType: "application/json" })], {
@@ -59,7 +59,12 @@ function PostingForm() {
     // for (const value of formData.values()) {
     //   console.log(value);
     // }
-    
+    for (const key of formData.keys()) {
+      console.log(key);
+    }
+    for (const value of formData.values()) {
+      console.log(value);
+    }
     const token = localStorage.getItem("access_token");
     console.log(formData);
     await axios({
@@ -74,7 +79,7 @@ function PostingForm() {
     })
       .then(function (response) {
         console.log(response + "asfd");
-        navigate('/')
+        navigate("/");
       })
       .catch(function (error) {
         console.log(error.result);

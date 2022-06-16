@@ -58,6 +58,9 @@ const Main = () => {
                 </PostHeart>
               </TitleWrap>
               <PostTime>{p.modifiedAt}</PostTime>
+              <ContentBox>
+                <p>{p.content}</p>
+              </ContentBox>
             </PostContainer>
           </PostWrap>
         ))}
@@ -126,6 +129,10 @@ const PostHeart = styled.div`
 
 const PostTime = styled.p`
   margin: 10px 0 20px 40px;
+`;
+
+const ContentBox = styled.div`
+  display: none;
 `;
 
 export default Main;
