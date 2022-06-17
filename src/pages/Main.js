@@ -4,49 +4,66 @@ import Avatar from "@mui/material/Avatar";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { getPosts } from "../redux/modules/post";
+import { Link } from "react-router-dom";
 
 const Main = () => {
-  let getPostDB = useSelector((state) => state.post.postList);
+  const dispatch = useDispatch();
+  const { posts, error, loading } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    dispatch(getPostDB());
+    dispatch(getPosts());
   }, []);
 
+  if (posts?.length === 0) {
+    return <p>upload file not exist</p>;
+  }
+
+  if (error) {
+    return <p>error! try again!</p>;
+  }
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
-    <div>
-      {/* {getPostDB.map((p, i) => {
-        <PostWrap key={p.id}>
-          <PostContainer>
-            <PostHeader>
-              <Avatar
-                alt={p.nickname}
-                src="/static/images/avatar/1.jpg"
-                style={{
-                  marginLeft: 20,
-                  marginRight: 10,
-                  outline: "solid 2px black",
-                }}
-              />
-              <h3>{p.nickname}</h3>
-            </PostHeader>
-
-            <PostImg src={p.imageUrl} />
-
-            <TitleWrap>
-              <PostTitle>{p.title}</PostTitle>
-              <PostHeart
-                onClick={() => {
-                  dispatch(changeHeart(p.isheart));
-                }}
-              >
-                <FontAwesomeIcon icon={faHeart} className="fa-2xl" />
-              </PostHeart>
-            </TitleWrap>
-
-            <PostTime>{p.modifiedAt}</PostTime>
-          </PostContainer>
-        </PostWrap>;
-      })} */}
+    <div className="mainPage">
+      {posts?.length > 0 &&
+        posts.map((p, idx) => (
+          <PostWrap key={idx}>
+            <PostContainer>
+              <PostHeader>
+                <Avatar
+                  alt={p.nickname}
+                  src="/static/images/avatar/1.jpg"
+                  style={{
+                    marginLeft: 20,
+                    marginRight: 10,
+                    outline: "solid 2px black",
+                  }}
+                />
+                <h3>{p.nickname}</h3>
+              </PostHeader>
+              <Link to="/DetailPost" state={{ p: p }}>
+                <PostImg src={p.imageUrl} />
+              </Link>
+              <TitleWrap>
+                <PostTitle>{p.title}</PostTitle>
+                <PostHeart
+                // onClick={() => {
+                //   dispatch(changeHeart(p.isHeart));
+                // }}
+                >
+                  <FontAwesomeIcon icon={faHeart} className="fa-2xl" />
+                </PostHeart>
+              </TitleWrap>
+              <PostTime>{p.modifiedAt}</PostTime>
+              <ContentBox>
+                <p>{p.content}</p>
+              </ContentBox>
+            </PostContainer>
+          </PostWrap>
+        ))}
     </div>
   );
 };
@@ -77,7 +94,6 @@ const PostContainer = styled.div`
 
 const PostHeader = styled.div`
   display: flex;
-
   align-items: center;
   padding: 20px;
 `;
@@ -113,6 +129,10 @@ const PostHeart = styled.div`
 
 const PostTime = styled.p`
   margin: 10px 0 20px 40px;
+`;
+
+const ContentBox = styled.div`
+  display: none;
 `;
 
 export default Main;
